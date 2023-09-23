@@ -51,6 +51,7 @@ jobs:
       
       - name: 스프링부트 애플리케이션 빌드 
         run: |
+          gradle wrap
           chmod +x gradlew
           sudo ./gradlew build
         shell: bash
