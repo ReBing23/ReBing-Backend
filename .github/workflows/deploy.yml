@@ -48,6 +48,7 @@ jobs:
         run: |
           chmod +x gradlew
           sudo ./gradlew build
+        shell: bash
 
       - name: 도커 이미지 빌드 
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest .
