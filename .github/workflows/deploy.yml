@@ -24,22 +24,33 @@ jobs:
       - name: 저장소 Checkout
         uses: actions/checkout@v3
 
-      - name: 스프링부트 애플리케이션 빌드 # (1)
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*',
+            '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: 스프링부트 애플리케이션 빌드 
         run: sudo ./gradlew build
 
-      - name: 도커 이미지 빌드 # (2)
+      - name: 도커 이미지 빌드 
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest .
 
-      - name: Docker Hub 로그인 # (3)
+      - name: Docker Hub 로그인 
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Docker Hub 퍼블리시 # (4)
+      - name: Docker Hub 퍼블리시 
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
 
-      - name: WAS 인스턴스 접속 및 애플리케이션 실행 # (5)
+      - name: WAS 인스턴스 접속 및 애플리케이션 실행 
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.AWS_SSH_HOST  }}
