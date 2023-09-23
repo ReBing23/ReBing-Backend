@@ -42,13 +42,13 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: 현재 디렉터리에 있는 파일 확인
-        run: ls
+        run: ls/gradle/wrapper
       
       - name: 스프링부트 애플리케이션 빌드 
         run: |
-          gradle wrap
+          # gradle wrap
           chmod +x gradlew
-          sudo ./gradlew build
+          ./gradlew build
         shell: bash
 
       - name: 도커 이미지 빌드 
