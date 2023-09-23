@@ -45,7 +45,9 @@ jobs:
         run: ls
 
       - name: 스프링부트 애플리케이션 빌드 
-        run: sudo ./gradlew build
+        run: |
+          chmod +x gradlew
+          sudo ./gradlew build
 
       - name: 도커 이미지 빌드 
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest .
