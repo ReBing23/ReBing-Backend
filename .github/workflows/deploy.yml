@@ -42,7 +42,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: 디렉터리에 있는 파일 확인
-        run: ls ./gradle/
+        run: ls ./gradle/wrapper
       
       - name: 스프링부트 애플리케이션 빌드 
         run: |
