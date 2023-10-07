@@ -48,7 +48,7 @@ jobs:
         run: |
           # gradle wrap
           chmod +x gradlew
-          ./gradlew build
+          ./gradlew clean build
         shell: bash
 
       - name: 도커 이미지 빌드 
